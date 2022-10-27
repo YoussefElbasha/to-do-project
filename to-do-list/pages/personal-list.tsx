@@ -1,25 +1,18 @@
-import { FormEvent, useState } from "react";
+import { FC, FormEvent, ReactElement, useState } from "react";
 import Todo from "../components/to-do";
 
 const PersonalList = () => {
-  const [text, setText] = useState("");
+  
+  const [todos, setTodos] = useState<ReactElement[]>([]);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    setText(text);
-    event.preventDefault();
-  };
-
-  const handleChange = (event: FormEvent<HTMLInputElement>) => {
-    setText(event.currentTarget.value);
-  };
+  const handleClick = (event: any) => {
+    setTodos([<Todo/>,...todos])
+  }
 
   return (
     <div>
-      <Todo
-        text={text}
-        handleSubmit={handleSubmit}
-        handleChange={handleChange}
-      ></Todo>
+      <ul>{todos}</ul>
+      <button onClick={handleClick}>Add to-do task</button>
     </div>
   );
 };
