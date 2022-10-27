@@ -1,14 +1,18 @@
-import { ChangeEventHandler, FC, FormEventHandler, useRef } from "react";
+import { ChangeEventHandler, FC, FormEvent, FormEventHandler, useRef, useState } from "react";
 import styles from "../styles/ToDo.module.css";
 
-interface Props {
-  text?: string;
-  handleChange?: ChangeEventHandler<HTMLInputElement>;
-  handleSubmit?: FormEventHandler<HTMLFormElement>;
-}
+const Todo: FC = () => {
 
-const Todo: FC<Props> = ({ text, handleChange, handleSubmit }) => {
-  const valueRef = useRef<HTMLInputElement>(null);
+  const [text, setText] = useState("");
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    setText(text);
+    event.preventDefault();
+  };
+
+  const handleChange = (event: FormEvent<HTMLInputElement>) => {
+    setText(event.currentTarget.value);
+  };
 
   return (
     <div>
