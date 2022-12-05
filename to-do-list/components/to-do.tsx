@@ -1,22 +1,27 @@
-import { ChangeEventHandler, FC, FormEvent, FormEventHandler, useRef, useState } from "react";
+import { FC, FormEvent, useState } from "react";
 import styles from "../styles/ToDo.module.css";
 
-const Todo: FC = () => {
+interface props {
+  deleteHandler: () => void;
+  submitHandler: (text: string) => void;
+  input?: any;
+}
 
-  const [text, setText] = useState("");
+const Todo: FC<props> = ({ deleteHandler, submitHandler, input }) => {
+  const [text, setText] = useState<string>(input);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    setText(text);
-    event.preventDefault();
+  const handleSumbit = (e: FormEvent<HTMLFormElement>) => {
+    submitHandler(text);
+    e.preventDefault();
   };
 
-  const handleChange = (event: FormEvent<HTMLInputElement>) => {
-    setText(event.currentTarget.value);
+  const handleChange = (e: any) => {
+    setText(e.currentTarget.value);
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSumbit}>
         <input
           type="text"
           aria-label="placeholder"
@@ -24,7 +29,9 @@ const Todo: FC = () => {
           onChange={handleChange}
           value={text}
         />
-        <button type="submit">change text</button>
+        <button onClick={deleteHandler} type="button">
+          Delete
+        </button>
       </form>
     </div>
   );
